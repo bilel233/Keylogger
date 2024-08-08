@@ -30,5 +30,8 @@ def onRelease(key):
 
 
 if __name__ == "__main__":
-    with keyboard.Listener(on_press=onPush,on_release=onRelease) as listener:
-        listener.join()
+    with keyboard.Listener(on_press=onPush,on_release=onRelease) as listener:   # on creer un ecouteur pour surveiller le clavier
+        listener.join() #on bloque le listener, on le laisse en cours d'execution
+
+
+
